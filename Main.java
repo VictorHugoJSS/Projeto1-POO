@@ -77,7 +77,15 @@ public class Main{
         int pos = sc.nextInt()-1;
         sc.close();
 
-        
+        System.out.println("Codigo: ");
+        produtos[pos].codigo = sc.next();
+        System.out.println("Nome: ");
+        produtos[pos].nome = sc.next();
+        System.out.println("Preço: ");
+        produtos[pos].valor = sc.nextDouble();
+        System.out.println("Quantidade: ");
+        produtos[pos].quant = sc.nextInt();
+
         return produtos;
     }
     public static void main (String[] args){
@@ -85,9 +93,13 @@ public class Main{
         int function;
         int pos;
 
-        Menu_Principal();
-        function = sc.nextInt();
-        while (function != 5){
+        while (true){
+            Menu_Principal();
+            function = sc.nextInt();
+
+            if (function == 5){
+                break;
+            }
             if (function == 1){
                 produtos = push();
             }
@@ -103,8 +115,6 @@ public class Main{
             if (function == 4){
                 produtos = Atualizar_produto();
             }
-            Menu_Principal();
-            function = Integer.parseInt(sc.next());
         }
         sc.close();
     }
