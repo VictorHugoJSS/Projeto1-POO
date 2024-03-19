@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 public class Main{
-    public static Produto[] produtos = new Produto[10];
+    public static Produto produtos[] = new Produto[10];
     public static int j = 0;
+
     public static Produto[] Array_Resize(){
         int newSize = produtos.length * 2;
         Produto[] produto = new Produto[newSize];
@@ -20,7 +21,7 @@ public class Main{
 
     public static void print_products(){
         int j = 1;
-        for (int i = 0; i <= j; i++){
+        for (int i = 0; i < j; i++){
             System.out.printf("%d.Codigo: %s Nome: %s Valor: %.2f Quant: %d%n", j++, produtos[i].codigo, produtos[i].nome, produtos[i].valor, produtos[i].quant);
         }
     }
@@ -29,23 +30,29 @@ public class Main{
         Scanner sc = new Scanner(System.in);
         int confirm = 1;
 
-        while (confirm != 0){
+        while (true){
             if (j == produtos.length){
                 produtos = Array_Resize();
             }
-            System.out.print("Codigo: ");
-            produtos[j].codigo = sc.nextLine();
-            System.out.print("Nome: ");
-            produtos[j].nome = sc.nextLine();
-            System.out.print("Preço: ");
+            if (confirm == 0){
+                break;
+            }
+            produtos[j] = new Produto();
+
+            System.out.println("Codigo: ");
+            produtos[j].codigo = sc.next();
+
+            System.out.println("Nome: ");
+            produtos[j].nome = sc.next();
+
+            System.out.println("Preço: ");
             produtos[j].valor = sc.nextDouble();
-            System.out.print("Quant: ");
+
+            System.out.println("Quant: ");
             produtos[j].quant = sc.nextInt();
 
-            while (confirm != 1 || confirm != 0){
-                System.out.print("Digite 1 para adicionar um novo item ou Digite 0 para sair");
-                confirm = sc.nextInt();
-            }
+            System.out.println("Digite 1 para adicionar um novo item ou Digite 0 para sair: ");
+            confirm = sc.nextInt();
             j++;
         }
         sc.close();
@@ -53,11 +60,13 @@ public class Main{
     }
 
     public static Produto[] pop(int pos){
-        for(int i = j = 0; i <= j; i++){
+        int i, k;
+        for(i = k = 0; i < j; i++){
             if (i != pos){
-                produtos[j++] = produtos[i];
+                produtos[k++] = produtos[i];
             }
         }
+
         return produtos;
     }
 
@@ -73,22 +82,29 @@ public class Main{
     }
     public static void main (String[] args){
         Scanner sc = new Scanner(System.in);
-        int function, pos;
+        int function;
+        int pos;
 
         Menu_Principal();
         function = sc.nextInt();
         while (function != 5){
-            switch (function){
-                case 1: produtos = push(); break;
-                case 2: print_products(); 
-                System.out.print("Digite o número do item que você quer remover: "); 
+            if (function == 1){
+                produtos = push();
+            }
+            if (function == 2){
+                print_products();
+                System.out.println("Digite o numero item que você quer remover:");
                 pos = sc.nextInt();
-                pop(pos-1); break;
-                case 3: print_products();
-                case 4: 
+                produtos = pop(pos-1);
+            }
+            if (function == 3){
+                print_products();
+            }
+            if (function == 4){
+                produtos = Atualizar_produto();
             }
             Menu_Principal();
-            function = sc.nextInt();
+            function = Integer.parseInt(sc.next());
         }
         sc.close();
     }
