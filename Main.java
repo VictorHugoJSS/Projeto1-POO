@@ -48,7 +48,7 @@ public class Main{
             System.out.println("Nome: ");
             produtos[j].nome = sc.next();
 
-            while (produtos[j].valor < 0){
+            while (produtos[j].valor < 0.00){
                 System.out.println("Preço: ");
                 produtos[j].valor = sc.nextDouble();
             }
